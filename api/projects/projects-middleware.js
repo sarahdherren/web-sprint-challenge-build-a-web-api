@@ -5,7 +5,7 @@ async function validateId (req, res, next) {
         const { id } = req.params;
         const validProject = await Projects.get(id);
         if(validProject) {
-            req.project = validProject;
+            req.projectId = validProject;
             next();
         } else {
             next({
@@ -20,7 +20,7 @@ async function validateId (req, res, next) {
 
 async function validateBody (req, res, next) {
     try {
-        const { name, description } = req.body;
+        const { name, description, completed } = req.body;
         if(!name || typeof name !== 'string' || !name.trim()){
             next({
                 status: 400,
@@ -31,8 +31,13 @@ async function validateBody (req, res, next) {
                 status: 400,
                 message: "Your project requires a description"
             });
-        } else {
-            req.project = req.body;
+        } else if(completed === undefined){
+            next({
+                status: 400,
+                message: "Problem with project status"
+            });
+         } else {
+            req.projectBody = req.body;
             next();
         }
     } catch (error) {
@@ -43,4 +48,4 @@ async function validateBody (req, res, next) {
 module.exports = {
     validateId,
     validateBody,
-}
+};

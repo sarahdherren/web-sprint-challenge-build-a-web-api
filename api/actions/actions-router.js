@@ -24,23 +24,24 @@ actionsRouter.post('/', validateBody, async (req, res, next) => {
       await Actions.insert(req.action);
       res.status(201).json(req.action);
     } catch (error) {
+         next(error);  
+    }
+});
+actionsRouter.put('/:id', validateId, validateBody, async (req, res, next) => {
+    try {
+        const updateAction = await Actions.update(req.params.id, req.action);
+        res.status(200).json(updateAction);
+    } catch (error) {
+         next(error);  
+    }
+});
+actionsRouter.verb('/', async (req, res, next) => {
+    try {
+        
+    } catch (error) {
          next(error)  
     }
 })
-//actionsRouter.verb('/', async (req, res, next) => {
-//     try {
-        
-//     } catch (error) {
-//          next(error)  
-//     }
-// })
-//actionsRouter.verb('/', async (req, res, next) => {
-//     try {
-        
-//     } catch (error) {
-//          next(error)  
-//     }
-// })
 
 
 

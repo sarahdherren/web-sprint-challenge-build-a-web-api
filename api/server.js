@@ -12,8 +12,15 @@ server.use(helmet());
 server.use('/api/actions', actionsRouter);
 server.use('/api/projects', projectsRouter);
 
-server.get('./', (req, res) => {
+server.get('/', (req, res) => {
     res.send(`<h1>Welcome to the Lambda Project API</h1>`);
 });
+
+server.use((err, req, res, next) => {
+    res.status(err.status || 500).json({
+        message: err.message
+    });
+});
+
 
 module.exports = server;

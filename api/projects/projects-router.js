@@ -1,5 +1,8 @@
 const projectsRouter = require('express').Router();
 const Projects = require('./projects-model') ;
+const {
+    validateId 
+} = require('./projects-middleware');
 
 projectsRouter.get('/', async (req, res, next) => {
     try {
@@ -9,10 +12,9 @@ projectsRouter.get('/', async (req, res, next) => {
         next(error);
     }
 });
-projectsRouter.delete('/:id', async (req, res, next) => {
+projectsRouter.delete('/:id', validateId, async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const deleteProject = await Projects.remove(id); //eslint-disable-line
+        await Projects.remove(req.project.id);
         next();
     } catch (error) {
         next(error);

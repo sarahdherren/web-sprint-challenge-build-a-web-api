@@ -13,7 +13,7 @@ server.use('/api/actions', actionsRouter);
 server.use('/api/projects', projectsRouter);
 
 server.get('./', (req, res) => {
-    res.send(`<h1>Welcome to the Lambda Project API</h1>`)
+    res.send(`<h1>Welcome to the Lambda Project API</h1>`);
 });
 
 module.exports = server;

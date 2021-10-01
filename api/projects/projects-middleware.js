@@ -18,6 +18,29 @@ async function validateId (req, res, next) {
     }
 }
 
+async function validateBody (req, res, next) {
+    try {
+        const { name, description } = req.body;
+        if(!name || typeof name !== 'string' || !name.trim()){
+            next({
+                status: 400,
+                message: "Your project requires a name"
+            });
+        } else if (!description || typeof description !== 'string' || !description.trim()) {
+            next({
+                status: 400,
+                message: "Your project requires a description"
+            });
+        } else {
+            req.project = req.body;
+            next();
+        }
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     validateId,
+    validateBody,
 }

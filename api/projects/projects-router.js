@@ -44,13 +44,14 @@ projectsRouter.put('/:id', validateId, validateBody, async (req, res, next) => {
         next(error);
     }
 });
-// projectsRouter.verb('/', (req, res, next) => {
-//     try {
-        
-//     } catch (error) {
-//         next(error);
-//     }
-// });
+projectsRouter.get('/:id/actions', validateId, async (req, res, next) => {
+    try {
+        const projectActions = await Projects.getProjectActions(req.projectId.id);
+        res.status(200).json(projectActions);
+    } catch (error) {
+        next(error);
+    }
+});
 
 
 

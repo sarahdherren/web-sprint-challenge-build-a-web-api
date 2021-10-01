@@ -35,13 +35,14 @@ actionsRouter.put('/:id', validateId, validateBody, async (req, res, next) => {
          next(error);  
     }
 });
-actionsRouter.verb('/', async (req, res, next) => {
+actionsRouter.delete('/:id', validateId, async (req, res, next) => {
     try {
-        
+       await Actions.remove(req.actionId.id);
+       next();
     } catch (error) {
-         next(error)  
+         next(error);  
     }
-})
+});
 
 
 
